@@ -57,7 +57,7 @@ function update(){
 };
 
 function updateBalls(){
-	
+	var clock = document.getElementById("clock");
 	for(var i = 0; i<balls.length; i++){
 		balls[i].x += balls[i].vx;
 		balls[i].y += balls[i].vy;
@@ -66,6 +66,9 @@ function updateBalls(){
 		if(balls[i].y >= CANVAS_HEIGHT-RADIUS){
 			balls[i].y = CANVAS_HEIGHT-RADIUS;
 			balls[i].vy = -balls[i].vy*0.55;
+		}
+		if(balls[i].x <= clock.offsetLeft-120 || balls[i].x>=clock.offsetLeft+1111){
+			balls.splice(i--,1);
 		}
 	}
 };
@@ -121,7 +124,7 @@ function render(context){
 };
 
 function renderDigit(x,y,num,context){
-	context.fillStyle = "rgba(0, 51, 51, 0.5)";
+	context.fillStyle = "#3399cc";
 	for(var i = 0; i<digit[num].length; i++){
 		for(var j = 0; j<digit[num][i].length; j++){
 			if(digit[num][i][j]==1){
