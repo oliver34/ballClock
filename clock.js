@@ -3,14 +3,21 @@ var CANVAS_WIDTH = 1111,CANVAS_HEIGHT = 500,
 	MARGIN_TOP = 60,MARGIN_LEFT = 30,
 	CUR_SHOWTIME_SECONDS = 0;
 
-var balls = [];
+var balls = [],endTime = new Date();
+	endTime.setTime(endTime.getTime()+3600*1000);
 
-const endTime = new Date(2016,9,4,22,50,40),
-	  colors = ["#3399cc","#33ff33","#FF8C00","#7A67EE","#3A5FCD","#CD3700","#6666cc","#cc3333","#000000","#003399"];
+const colors = ["#3399cc","#33ff33","#FF8C00","#7A67EE","#3A5FCD","#CD3700","#6666cc","#cc3333","#000000","#003399"];
 
 window.onload = function(){
 	var clock = document.getElementById("clock");
 	var context = clock.getContext("2d");
+	
+	CANVAS_WIDTH = document.documentElement.clientWidth;
+	CANVAS_HEIGHT = document.documentElement.clientHeight;
+	MARGIN_LEFT = Math.round(CANVAS_WIDTH/10);
+	MARGIN_TOP = Math.round(CANVAS_HEIGHT/5);
+	RADIUS = Math.round(CANVAS_WIDTH*4/5/108)-1;
+
 	clock.width = CANVAS_WIDTH;
 	clock.height = CANVAS_HEIGHT;
 	CUR_SHOWTIME_SECONDS = getCurentSec();
@@ -58,7 +65,7 @@ function update(){
 
 function updateBalls(){
 	var clock = document.getElementById("clock");
-	for(var i = 0; i<balls.length; i++){
+	for(var i = 0; i < balls.length; i++){
 		balls[i].x += balls[i].vx;
 		balls[i].y += balls[i].vy;
 		balls[i].vy += balls[i].g;
@@ -67,7 +74,10 @@ function updateBalls(){
 			balls[i].y = CANVAS_HEIGHT-RADIUS;
 			balls[i].vy = -balls[i].vy*0.55;
 		}
-		if(balls[i].x <= clock.offsetLeft-120 || balls[i].x>=clock.offsetLeft+1111){
+	}
+	var count = 0;
+	for(var i = 0; i < balls.length; i++){
+		if(balls[i].x+RADIUS<=0 || balls[i].x-RADIUS >= CANVAS_WIDTH){
 			balls.splice(i--,1);
 		}
 	}
