@@ -1,0 +1,30 @@
+#clock{
+	height:90%;display:block;margin:auto;
+}
+#topDiv{
+	width:100%;
+	text-align: center;
+}
+#topDiv button{
+	margin: 20px;
+	width: 100px;
+	height: 40px;
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	border:none;
+	border-radius: 6px;	
+	cursor: pointer;
+}
+button:nth-child(1){
+	background-color: rgba(0, 102, 204,0.8);
+}
+button:nth-child(1):hover{
+	background-color: rgba(0, 102, 204,0.6);
+}
+button:nth-child(2){
+	background-color: rgba(0, 153, 0,0.8);
+}
+button:nth-child(2):hover{
+	background-color: rgba(0, 153, 0,0.6);
+}

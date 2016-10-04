@@ -3,8 +3,9 @@ var CANVAS_WIDTH = 1111,CANVAS_HEIGHT = 500,
 	MARGIN_TOP = 60,MARGIN_LEFT = 30,
 	CUR_SHOWTIME_SECONDS = 0;
 
-var balls = [],endTime = new Date();
-	endTime.setTime(endTime.getTime()+3600*1000);
+var balls = [],endTime = new Date(),
+	OPTION = 2;//操作（1--倒计时；2--时间）
+endTime.setTime(endTime.getTime()+3600*1000);
 
 const colors = ["#3399cc","#33ff33","#FF8C00","#7A67EE","#3A5FCD","#CD3700","#6666cc","#cc3333","#000000","#003399"];
 
@@ -20,7 +21,7 @@ window.onload = function(){
 
 	clock.width = CANVAS_WIDTH;
 	clock.height = CANVAS_HEIGHT;
-	CUR_SHOWTIME_SECONDS = getCurentSec();
+	CUR_SHOWTIME_SECONDS = getCurentSec(OPTION);
 	setInterval(
 		function(){
 			render(context);
@@ -30,7 +31,7 @@ window.onload = function(){
 };
 
 function update(){
-	var nextSecon = getCurentSec(),
+	var nextSecon = getCurentSec(OPTION),
 		nextHours = parseInt(nextSecon/3600),
 		nextMinites = parseInt((nextSecon-nextHours*3600)/60),
 		nextSecondes = nextSecon%60,
@@ -101,11 +102,17 @@ function addBalls(x,y,num){
 	}
 };
 
-function getCurentSec(){
+function getCurentSec(option){
 	var curTime = new Date(),
+		retTime = "";
+	if(option == 1){
 		retTime = endTime.getTime()-curTime.getTime();
-	retTime = Math.round(retTime/1000);
-	return retTime>=0?retTime:0;
+		retTime = Math.round(retTime/1000);
+		return retTime>=0?retTime:0;
+	}else{
+		retTime = curTime.getHours() * 3600 + curTime.getMinutes() * 60 + curTime.getSeconds();
+		return retTime;
+	}
 };
 
 function render(context){
@@ -145,5 +152,13 @@ function renderDigit(x,y,num,context){
 				context.closePath();
 			}
 		}
+	}
+};
+
+function resetOption(option){
+	OPTION=option;
+	balls=[];
+	if(option==2){
+		endTime.setTime(new Date().getTime()+3600*1000);
 	}
 };
